@@ -139,7 +139,7 @@ const Staff = () => {
   const STAFF_COLORS = ['#8B5CF6', '#E5E7EB'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-100 mt-8">
       <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Page 5: Staff Overview */}
