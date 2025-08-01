@@ -31,8 +31,7 @@ const StarRating = ({ rating }) => (
   </div>
 );
 
-
-const DriverVehicles = () => {
+const DriverVechiles = () => {
   const [currentFilter, setCurrentFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -91,119 +90,166 @@ const DriverVehicles = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <div className="max-w-screen-xl mx-auto space-y-6">
 
-        <div className="text-left">
-          <h2 className="text-3xl font-bold text-gray-800">
+        <div className="text-center md:text-left">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
             Driver & Vehicle Performance
           </h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-gray-600 mt-2">
             An overview of fleet performance, costs, and revenue.
           </p>
         </div>
 
-        {/* Filters and Search */}
-        <Card>
-          <CardContent className="p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Filter className="h-5 w-5 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700 mr-2">Filter by Profit:</span>
-              <div className="flex gap-2">
-                <Button variant={currentFilter === 'all' ? 'default' : 'outline'} size="sm" onClick={() => handleFilterClick('all')}>All</Button>
-                <Button variant={currentFilter === 'top' ? 'default' : 'outline'} size="sm" onClick={() => handleFilterClick('top')} className={currentFilter === 'top' ? 'bg-green-600 hover:bg-green-700' : ''}><TrendingUp className="h-4 w-4 mr-1" />Top</Button>
-                <Button variant={currentFilter === 'worst' ? 'default' : 'outline'} size="sm" onClick={() => handleFilterClick('worst')} className={currentFilter === 'worst' ? 'bg-red-600 hover:bg-red-700' : ''}><TrendingDown className="h-4 w-4 mr-1" />Worst</Button>
+        {/* Enhanced Filters and Search */}
+        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardContent className="p-6">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Filter className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-700">Filter by Profit:</span>
+                </div>
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <Button 
+                    variant="ghost"
+                    size="sm" 
+                    className={`${currentFilter === 'all' 
+                      ? 'bg-white shadow-sm text-purple-600 hover:text-purple-700' 
+                      : 'text-gray-600 hover:text-gray-800'
+                    } transition-all duration-200`}
+                    onClick={() => handleFilterClick('all')}
+                  >
+                    All
+                  </Button>
+                  <Button 
+                    variant="ghost"
+                    size="sm" 
+                    className={`${currentFilter === 'top' 
+                      ? 'bg-emerald-500 shadow-sm text-white hover:bg-emerald-600' 
+                      : 'text-gray-600 hover:text-gray-800'
+                    } transition-all duration-200`}
+                    onClick={() => handleFilterClick('top')}
+                  >
+                    <TrendingUp className="h-4 w-4 mr-1" />Top
+                  </Button>
+                  <Button 
+                    variant="ghost"
+                    size="sm" 
+                    className={`${currentFilter === 'worst' 
+                      ? 'bg-red-500 shadow-sm text-white hover:bg-red-600' 
+                      : 'text-gray-600 hover:text-gray-800'
+                    } transition-all duration-200`}
+                    onClick={() => handleFilterClick('worst')}
+                  >
+                    <TrendingDown className="h-4 w-4 mr-1" />Worst
+                  </Button>
+                </div>
               </div>
-            </div>
 
-            <div className="relative w-full md:w-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search Driver, Vehicle, Model..."
-                value={searchTerm}
-                onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-                className="pl-10 pr-4 py-2 border rounded-md w-full md:w-64 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
+              <div className="relative w-full lg:w-auto">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 p-1 bg-gray-100 rounded">
+                  <Search className="h-4 w-4 text-gray-500" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search Driver, Vehicle, Model..."
+                  value={searchTerm}
+                  onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                  className="pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg w-full lg:w-80 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white shadow-sm"
+                />
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Performance Table */}
-        <Card className="shadow-md">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <Truck className="text-purple-600"/>
+        {/* Enhanced Performance Table */}
+        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-200">
+            <CardTitle className="flex items-center gap-3 text-xl">
+              <div className="p-2 bg-purple-100 rounded-lg">
+                <Truck className="text-purple-600 h-5 w-5"/>
+              </div>
               Performance Matrix
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left text-gray-600">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gradient-to-r from-gray-100 to-gray-200 sticky top-0">
                   <tr>
-                    <th scope="col" className="px-4 py-3">Driver</th>
-                    <th scope="col" className="px-4 py-3">Vehicle</th>
-                    <th scope="col" className="px-4 py-3">Status</th>
-                    <th scope="col" className="px-4 py-3">Total Revenue</th>
-                    <th scope="col" className="px-4 py-3">Net Profit</th>
-                    <th scope="col" className="px-4 py-3">Driver Rating</th>
-                    <th scope="col" className="px-4 py-3">Incidents</th>
-                    <th scope="col" className="px-4 py-3">Last Service</th>
-                    <th scope="col" className="px-4 py-3">Fitness</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Driver</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Vehicle</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Status</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Total Revenue</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Net Profit</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Driver Rating</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Incidents</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Last Service</th>
+                    <th scope="col" className="px-4 py-4 font-semibold text-gray-700">Fitness</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-100">
                   {paginatedData.map((item) => (
-                    <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                      <td className="px-4 py-3">
+                    <tr key={item.id} className="hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-200">
+                      <td className="px-4 py-4">
                           <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center font-bold text-sm shadow-lg">
                                   {item.driverName.split(' ').map(n=>n[0]).join('')}
                               </div>
-                              <span className="font-medium text-gray-900">{item.driverName}</span>
+                              <span className="font-semibold text-gray-900">{item.driverName}</span>
                           </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-4">
                         <div>
-                          <p className="font-medium">{item.vehicleNo}</p>
-                          <p className="text-xs text-gray-500">{item.model}</p>
+                          <p className="font-semibold text-gray-900">{item.vehicleNo}</p>
+                          <p className="text-xs text-gray-500 font-medium">{item.model}</p>
                         </div>
                       </td>
-                      <td className="px-4 py-3">
-                        <Badge variant="outline" className={`capitalize ${
-                            item.status === 'On Trip' ? 'bg-blue-100 text-blue-800 border-blue-300' 
-                            : item.status === 'Available' ? 'bg-green-100 text-green-800 border-green-300'
-                            : 'bg-orange-100 text-orange-800 border-orange-300'
-                        }`}>
+                      <td className="px-4 py-4">
+                        <Badge 
+                          variant="outline" 
+                          className={`capitalize font-medium hover:shadow-sm transition-shadow ${
+                            item.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border-blue-300 hover:bg-blue-100' 
+                            : item.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100'
+                            : 'bg-orange-50 text-orange-700 border-orange-300 hover:bg-orange-100'
+                          }`}
+                        >
                             {item.status}
                         </Badge>
                       </td>
-                      <td className="px-4 py-3 font-medium text-green-700">
+                      <td className="px-4 py-4 font-bold text-emerald-700 text-base">
                         ₹{item.totalRevenue.toLocaleString('en-IN')}
                       </td>
-                      <td className={`px-4 py-3 font-bold ${item.netProfit > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      <td className={`px-4 py-4 font-bold text-base ${item.netProfit > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                         ₹{item.netProfit.toLocaleString('en-IN')}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-4">
                         <StarRating rating={item.driverRating} />
                       </td>
-                       <td className="px-4 py-3">
-                        <div className={`flex items-center gap-1 font-medium ${item.incidents > 0 ? 'text-red-500' : 'text-gray-500'}`}>
+                       <td className="px-4 py-4">
+                        <div className={`flex items-center gap-2 font-semibold ${item.incidents > 0 ? 'text-red-600' : 'text-gray-500'}`}>
                           {item.incidents > 0 && <AlertTriangle className="h-4 w-4"/>}
-                          {item.incidents}
+                          <Badge className={`${item.incidents > 0 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}>
+                            {item.incidents}
+                          </Badge>
                         </div>
                       </td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1 text-gray-500">
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-2 text-gray-600 font-medium">
                             <Calendar className="h-4 w-4"/>
                             {item.lastService}
                         </div>
                       </td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1 font-medium">
-                            <ShieldCheck className={`h-4 w-4 ${parseInt(item.fitness) >= 90 ? 'text-green-500' : 'text-yellow-500'}`}/>
-                            {item.fitness}
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-2 font-semibold">
+                            <ShieldCheck className={`h-4 w-4 ${parseInt(item.fitness) >= 90 ? 'text-emerald-500' : parseInt(item.fitness) >= 80 ? 'text-yellow-500' : 'text-red-500'}`}/>
+                            <span className={`${parseInt(item.fitness) >= 90 ? 'text-emerald-600' : parseInt(item.fitness) >= 80 ? 'text-yellow-600' : 'text-red-600'}`}>
+                              {item.fitness}
+                            </span>
                         </div>
                       </td>
                     </tr>
@@ -214,37 +260,51 @@ const DriverVehicles = () => {
           </CardContent>
         </Card>
         
-        {/* Pagination */}
-        <div className="flex justify-between items-center gap-4 pt-4">
-          <span className="text-sm text-gray-700">
-            Showing <span className="font-semibold">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-semibold">{Math.min(currentPage * itemsPerPage, filteredAndSortedData.length)}</span> of <span className="font-semibold">{filteredAndSortedData.length}</span> results
-          </span>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            
-            <span className="text-sm">Page {currentPage} of {totalPages}</span>
+        {/* Enhanced Pagination */}
+        <Card className="shadow-lg border-0">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <span className="text-sm text-gray-700 font-medium">
+                Showing <span className="font-bold text-purple-600">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-bold text-purple-600">{Math.min(currentPage * itemsPerPage, filteredAndSortedData.length)}</span> of <span className="font-bold text-purple-600">{filteredAndSortedData.length}</span> results
+              </span>
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700 transition-all duration-200"
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  Previous
+                </Button>
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-gray-700">Page</span>
+                  <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold px-3 py-1">
+                    {currentPage}
+                  </Badge>
+                  <span className="text-sm font-medium text-gray-700">of {totalPages}</span>
+                </div>
 
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="hover:bg-purple-50 hover:border-purple-300 hover:text-purple-700 transition-all duration-200"
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
       </div>
     </div>
   );
 };
 
-export default DriverVehicles;
+export default DriverVechiles;

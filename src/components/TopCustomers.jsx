@@ -39,96 +39,165 @@ const TopCustomers = () => {
   
   const totalRevenue = customerData.reduce((sum, cust) => sum + cust.totalRevenue, 0);
 
-  // --- Reusable Stat Card Component ---
-  const StatCard = ({ title, value, icon: Icon, subtext }) => (
-    <Card>
+  // --- Enhanced Stat Card Component ---
+  const StatCard = ({ title, value, icon: Icon, subtext, bgColor, iconColor, textColor }) => (
+    <Card className={`${bgColor} border-0 shadow-lg hover:shadow-xl transition-shadow duration-300`}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-gray-500">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-gray-400" />
+        <CardTitle className={`text-sm font-medium ${textColor || 'text-white/90'}`}>{title}</CardTitle>
+        <div className={`p-2 rounded-lg ${iconColor}`}>
+          <Icon className="h-5 w-5 text-white" />
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-gray-500">{subtext}</p>
+        <div className={`text-2xl font-bold ${textColor || 'text-white'}`}>{value}</div>
+        <p className={`text-xs ${textColor ? 'text-gray-600' : 'text-white/80'} mt-1`}>{subtext}</p>
       </CardContent>
     </Card>
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <div className="max-w-screen-xl mx-auto space-y-6">
 
         {/* Page Header */}
-        <div>
-            <h2 className="text-3xl font-bold text-gray-800">Customers Overview</h2>
-            <p className="text-sm text-gray-500">Analysis of top customers by revenue and order volume.</p>
+        <div className="text-center md:text-left">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Customers Overview
+            </h2>
+            <p className="text-gray-600 mt-2">Analysis of top customers by revenue and order volume.</p>
         </div>
 
-        {/* KPI Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <StatCard title="Total Customers" value={customerData.length} icon={Users} subtext="+3 this month" />
-          <StatCard title="Total Revenue" value={`₹${(totalRevenue/100000).toFixed(2)}L`} icon={IndianRupee} subtext="Fiscal Year 2024" />
-          <StatCard title="Avg. Revenue/Cust." value={`₹${(totalRevenue/customerData.length/1000).toFixed(1)}k`} icon={TrendingUp} subtext="All time average" />
-          <StatCard title="Active Customers" value={customerData.filter(c=>c.status==='Active').length} icon={Award} subtext={`${Math.round(customerData.filter(c=>c.status==='Active').length / customerData.length * 100)}% of total`} />
+        {/* Enhanced KPI Cards */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <StatCard 
+            title="Total Customers" 
+            value={customerData.length} 
+            icon={Users} 
+            subtext="+3 this month" 
+            bgColor="bg-gradient-to-br from-blue-500 to-blue-600"
+            iconColor="bg-blue-700/30"
+          />
+          <StatCard 
+            title="Total Revenue" 
+            value={`₹${(totalRevenue/100000).toFixed(2)}L`} 
+            icon={IndianRupee} 
+            subtext="Fiscal Year 2024" 
+            bgColor="bg-gradient-to-br from-emerald-500 to-emerald-600"
+            iconColor="bg-emerald-700/30"
+          />
+          <StatCard 
+            title="Avg. Revenue/Cust." 
+            value={`₹${(totalRevenue/customerData.length/1000).toFixed(1)}k`} 
+            icon={TrendingUp} 
+            subtext="All time average" 
+            bgColor="bg-gradient-to-br from-orange-500 to-orange-600"
+            iconColor="bg-orange-700/30"
+          />
+          <StatCard 
+            title="Active Customers" 
+            value={customerData.filter(c=>c.status==='Active').length} 
+            icon={Award} 
+            subtext={`${Math.round(customerData.filter(c=>c.status==='Active').length / customerData.length * 100)}% of total`}
+            bgColor="bg-gradient-to-br from-purple-500 to-purple-600"
+            iconColor="bg-purple-700/30"
+          />
         </div>
 
-        {/* Customer Leaderboard Card */}
-        <Card className="shadow-sm">
-          <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <CardTitle className="flex items-center gap-2">
-              <Users className="text-blue-600" />
-              Customer Leaderboard
-            </CardTitle>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">Sort by:</span>
-              <Button size="sm" variant={sortBy === 'revenue' ? 'default' : 'outline'} onClick={() => setSortBy('revenue')}>
-                <IndianRupee className="h-4 w-4 mr-2" /> Revenue
-              </Button>
-              <Button size="sm" variant={sortBy === 'orders' ? 'default' : 'outline'} onClick={() => setSortBy('orders')}>
-                <ShoppingCart className="h-4 w-4 mr-2" /> Orders
-              </Button>
+        {/* Enhanced Customer Leaderboard Card */}
+        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <CardTitle className="flex items-center gap-3 text-xl">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Users className="text-blue-600 h-5 w-5" />
+                </div>
+                Customer Leaderboard
+              </CardTitle>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-gray-700">Sort by:</span>
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <Button 
+                    size="sm" 
+                    variant="ghost"
+                    className={`${sortBy === 'revenue' 
+                      ? 'bg-white shadow-sm text-blue-600 hover:text-blue-700' 
+                      : 'text-gray-600 hover:text-gray-800'
+                    } transition-all duration-200`}
+                    onClick={() => setSortBy('revenue')}
+                  >
+                    <IndianRupee className="h-4 w-4 mr-2" /> Revenue
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="ghost"
+                    className={`${sortBy === 'orders' 
+                      ? 'bg-white shadow-sm text-blue-600 hover:text-blue-700' 
+                      : 'text-gray-600 hover:text-gray-800'
+                    } transition-all duration-200`}
+                    onClick={() => setSortBy('orders')}
+                  >
+                    <ShoppingCart className="h-4 w-4 mr-2" /> Orders
+                  </Button>
+                </div>
+              </div>
             </div>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-gray-100 text-left">
+                <thead className="bg-gradient-to-r from-gray-100 to-gray-200 text-left">
                   <tr>
-                    <th className="p-3 font-medium text-center w-16">Rank</th>
-                    <th className="p-3 font-medium">Customer</th>
-                    <th className="p-3 font-medium">Total Revenue</th>
-                    <th className="p-3 font-medium">Total Orders</th>
-                    <th className="p-3 font-medium">Status</th>
-                    <th className="p-3 font-medium">Member Since</th>
+                    <th className="p-4 font-semibold text-gray-700 text-center w-16">Rank</th>
+                    <th className="p-4 font-semibold text-gray-700">Customer</th>
+                    <th className="p-4 font-semibold text-gray-700">Total Revenue</th>
+                    <th className="p-4 font-semibold text-gray-700">Total Orders</th>
+                    <th className="p-4 font-semibold text-gray-700">Status</th>
+                    <th className="p-4 font-semibold text-gray-700">Member Since</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-100">
                   {sortedCustomers.map((customer, index) => (
-                    <tr key={customer.id} className="border-b hover:bg-gray-50">
-                      <td className="p-3 text-center">
-                        <Badge variant="secondary" className="text-base">
+                    <tr key={customer.id} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                      <td className="p-4 text-center">
+                        <Badge 
+                          variant="secondary" 
+                          className={`text-sm font-semibold ${
+                            index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900' :
+                            index === 1 ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800' :
+                            index === 2 ? 'bg-gradient-to-r from-orange-300 to-orange-400 text-orange-900' :
+                            'bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800'
+                          }`}
+                        >
                           {index + 1}
                         </Badge>
                       </td>
-                      <td className="p-3">
-                        <div className="font-semibold text-gray-800">{customer.name}</div>
-                        <div className="flex items-center text-xs text-gray-500 gap-1">
-                          <MapPin className="h-3 w-3" /> {customer.location}
+                      <td className="p-4">
+                        <div className="font-semibold text-gray-900">{customer.name}</div>
+                        <div className="flex items-center text-xs text-gray-500 gap-1 mt-1">
+                          <MapPin className="h-3 w-3 text-gray-400" /> {customer.location}
                         </div>
                       </td>
-                      <td className="p-3 font-medium text-green-700">
-                        {customer.totalRevenue.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
+                      <td className="p-4">
+                        <div className="font-bold text-emerald-700 text-base">
+                          {customer.totalRevenue.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 })}
+                        </div>
                       </td>
-                      <td className="p-3 font-medium text-blue-700">{customer.totalOrders}</td>
-                      <td className="p-3">
-                        <Badge variant="outline" className={
-                          customer.status === 'Active' ? 'text-green-700 bg-green-50 border-green-200' :
-                          customer.status === 'On Hold' ? 'text-yellow-700 bg-yellow-50 border-yellow-200' :
-                          'text-purple-700 bg-purple-50 border-purple-200'
-                        }>
+                      <td className="p-4">
+                        <div className="font-bold text-blue-700 text-base">{customer.totalOrders}</div>
+                      </td>
+                      <td className="p-4">
+                        <Badge 
+                          variant="outline" 
+                          className={`font-medium ${
+                            customer.status === 'Active' ? 'text-emerald-700 bg-emerald-50 border-emerald-300 hover:bg-emerald-100' :
+                            customer.status === 'On Hold' ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100' :
+                            'text-indigo-700 bg-indigo-50 border-indigo-300 hover:bg-indigo-100'
+                          } transition-colors duration-200`}
+                        >
                           {customer.status}
                         </Badge>
                       </td>
-                      <td className="p-3 text-gray-600">{customer.joinDate}</td>
+                      <td className="p-4 text-gray-600 font-medium">{customer.joinDate}</td>
                     </tr>
                   ))}
                 </tbody>
