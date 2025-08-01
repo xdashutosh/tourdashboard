@@ -4,6 +4,7 @@ import TopCustomers from './TopCustomers'
 import VechicleInfo from './VechicleInfo'
 import DriverVechiles from './DriverVechiles'
 import Staff from './Staff'
+import CustomerMap from './CustomerMap'
 
 const DashboardContent = () => {
   return (
@@ -13,6 +14,7 @@ const DashboardContent = () => {
     <VechicleInfo/>
     <DriverVechiles/>
     <Staff/>
+    <CustomerMap/>
     </div>
   )
 }
